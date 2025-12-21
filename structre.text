@@ -1,0 +1,21 @@
+# Navigate to your project root
+cd Mango_Plant_Diseases_Detection
+
+# Create new deployment folder
+mkdir flask_deploy
+cd flask_deploy
+
+# Create folder structure
+mkdir app
+mkdir embeddings_cache
+mkdir static
+mkdir templates
+```
+
+Your structure should now look like:
+```
+flask_deploy/
+├── app/
+├── embeddings_cache/
+├── static/
+└── templates/

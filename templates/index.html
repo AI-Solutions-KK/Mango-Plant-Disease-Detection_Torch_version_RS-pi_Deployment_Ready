@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mango Disease Detection</title>
+  <style>
+    body { font-family: Arial; background:#0e1117; color:white }
+    .box { max-width:900px; margin:auto }
+    button { padding:10px 18px; margin:6px; font-size:16px }
+    img { max-width:260px; border-radius:8px }
+    .row { display:flex; gap:30px }
+  </style>
+</head>
+<body>
+<div class="box">
+
+<h1>🥭 Mango Plant Disease Detection</h1>
+
+<input type="file" id="file">
+<button onclick="upload()">Upload</button>
+<button onclick="capture()">Capture</button>
+<button onclick="diagnose()">Diagnose</button>
+<button onclick="clean()">Clean</button>
+
+<hr>
+
+<div class="row">
+  <div>
+    <img id="preview">
+  </div>
+  <div id="output"></div>
+</div>
+
+<script>
+function refresh() {
+  document.getElementById("preview").src = "/preview?ts=" + Date.now()
+}
+
+function upload() {
+  let f = document.getElementById("file").files[0]
+  let fd = new FormData()
+  fd.append("file", f)
+  fetch("/upload", {method:"POST", body:fd}).then(refresh)
+}
+
+function capture() {
+  fetch("/capture", {method:"POST"}).then(refresh)
+}
+
+function diagnose() {
+  fetch("/diagnose", {method:"POST"})
+    .then(r=>r.json())
+    .then(d=>{
+      if(d.status!=="success"){ alert("Rejected"); return }
+      document.getElementById("output").innerHTML = `
+        <h3>${d.predicted_label}</h3>
+        <p><b>Confidence:</b> ${(d.confidence*100).toFixed(2)}%</p>
+        <p><b>Cause:</b> ${d.cause}</p>
+        <p><b>Treatment:</b> ${d.treatment}</p>
+        <p><b>Prevention:</b> ${d.prevention}</p>
+      `
+    })
+}
+
+function clean() {
+  fetch("/clean",{method:"POST"}).then(()=>{
+    document.getElementById("preview").src=""
+    document.getElementById("output").innerHTML=""
+  })
+}
+</script>
+
+</div>
+</body>
+</html>
