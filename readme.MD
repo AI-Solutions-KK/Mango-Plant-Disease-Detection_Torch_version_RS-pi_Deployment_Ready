@@ -122,4 +122,277 @@ http://<PI-IP>:5000
 
 ---
 
+
 Author: AI-Solution - Karan-kk
+
+# 🍓 Raspberry Pi Deployment Guidelines  
+(Mango Plant Disease Detection System)
+
+This document provides step-by-step, practical guidelines to deploy the Mango Plant Disease Detection system on a Raspberry Pi for offline field usage.
+
+---
+
+## 1️⃣ Recommended Raspberry Pi Setup
+
+### Hardware
+- Raspberry Pi 4 (4GB or 8GB)
+- 32GB or higher micro-SD card
+- Pi Camera v2 OR USB webcam
+- Heat sink + cooling fan (recommended)
+- Power supply (5V, 3A)
+
+---
+
+## 2️⃣ Operating System
+
+### Recommended OS
+- Raspberry Pi OS (64-bit)
+- Lite version preferred
+
+Enable required interfaces:
+```bash
+sudo raspi-config
+```
+Enable Camera and SSH.
+
+---
+
+## 3️⃣ System Dependencies
+
+```bash
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y python3 python3-pip python3-venv libatlas-base-dev libjpeg-dev libopenjp2-7 libtiff5 libopencv-dev
+```
+
+---
+
+## 4️⃣ Project Setup
+
+Copy project to Pi:
+```bash
+scp -r flask_deploy pi@<PI-IP>:/home/pi/
+```
+
+Navigate:
+```bash
+cd flask_deploy
+```
+
+---
+
+## 5️⃣ Python Virtual Environment
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+```
+
+---
+
+## 6️⃣ Install Python Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 7️⃣ Camera Validation
+
+USB camera:
+```bash
+ls /dev/video*
+```
+
+Test:
+```bash
+python3 - <<EOF
+import cv2
+cap = cv2.VideoCapture(0)
+ret, frame = cap.read()
+cv2.imwrite("test.jpg", frame)
+cap.release()
+print("Captured:", ret)
+EOF
+```
+
+Pi Camera:
+```bash
+libcamera-still -o test.jpg
+```
+
+---
+
+## 8️⃣ Model Files Checklist
+
+Ensure:
+- efficientnet_b4.onnx
+- embeddings_cache/svc_model.pkl
+- embeddings_cache/classes.npy
+- embeddings_cache/centroids.npy
+
+---
+
+## 9️⃣ Run Application
+
+```bash
+python server.py
+```
+
+Access:
+- http://localhost:5000
+- http://<PI-IP>:5000
+
+---
+
+## 🔟 Field Usage Flow
+
+1. Place mango leaf under camera
+2. Capture image
+3. Diagnose
+4. View disease, confidence, treatment
+5. Clean and repeat
+
+---
+
+## ✅ Deployment Status
+- Offline
+- Stable
+- Raspberry Pi Ready
+
+# 🍓 Raspberry Pi Deployment Guidelines  
+(Mango Plant Disease Detection System)
+
+This document provides step-by-step, practical guidelines to deploy the Mango Plant Disease Detection system on a Raspberry Pi for offline field usage.
+
+---
+
+## 1️⃣ Recommended Raspberry Pi Setup
+
+### Hardware
+- Raspberry Pi 4 (4GB or 8GB)
+- 32GB or higher micro-SD card
+- Pi Camera v2 OR USB webcam
+- Heat sink + cooling fan (recommended)
+- Power supply (5V, 3A)
+
+---
+
+## 2️⃣ Operating System
+
+### Recommended OS
+- Raspberry Pi OS (64-bit)
+- Lite version preferred
+
+Enable required interfaces:
+```bash
+sudo raspi-config
+```
+Enable Camera and SSH.
+
+---
+
+## 3️⃣ System Dependencies
+
+```bash
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y python3 python3-pip python3-venv libatlas-base-dev libjpeg-dev libopenjp2-7 libtiff5 libopencv-dev
+```
+
+---
+
+## 4️⃣ Project Setup
+
+Copy project to Pi:
+```bash
+scp -r flask_deploy pi@<PI-IP>:/home/pi/
+```
+
+Navigate:
+```bash
+cd flask_deploy
+```
+
+---
+
+## 5️⃣ Python Virtual Environment
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+```
+
+---
+
+## 6️⃣ Install Python Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## 7️⃣ Camera Validation
+
+USB camera:
+```bash
+ls /dev/video*
+```
+
+Test:
+```bash
+python3 - <<EOF
+import cv2
+cap = cv2.VideoCapture(0)
+ret, frame = cap.read()
+cv2.imwrite("test.jpg", frame)
+cap.release()
+print("Captured:", ret)
+EOF
+```
+
+Pi Camera:
+```bash
+libcamera-still -o test.jpg
+```
+
+---
+
+## 8️⃣ Model Files Checklist
+
+Ensure:
+- efficientnet_b4.onnx
+- embeddings_cache/svc_model.pkl
+- embeddings_cache/classes.npy
+- embeddings_cache/centroids.npy
+
+---
+
+## 9️⃣ Run Application
+
+```bash
+python server.py
+```
+
+Access:
+- http://localhost:5000
+- http://<PI-IP>:5000
+
+---
+
+## 🔟 Field Usage Flow
+
+1. Place mango leaf under camera
+2. Capture image
+3. Diagnose
+4. View disease, confidence, treatment
+5. Clean and repeat
+
+---
+
+## ✅ Deployment Status
+- Offline
+- Stable
+- Raspberry Pi Ready
