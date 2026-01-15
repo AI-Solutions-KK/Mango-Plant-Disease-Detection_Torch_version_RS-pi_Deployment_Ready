@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mango Disease Detection</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0e1117;
+      color: white;
+    }
+
+    .box {
+      max-width: 900px;
+      margin: auto;
+      padding: 10px;
+    }
+
+    button {
+      padding: 10px 18px;
+      margin: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #1f2937;
+      color: white;
+      border: 1px solid #374151;
+      border-radius: 6px;
+    }
+
+    button:hover {
+      background: #374151;
+    }
+
+    img {
+      max-width: 260px;
+      border-radius: 8px;
+      border: 2px solid #444;
+    }
+
+    .row {
+      display: flex;
+      gap: 30px;
+      align-items: flex-start;
+      margin-top: 20px;
+    }
+
+    #output h3 {
+      margin-top: 0;
+      color: #fbbf24;
+    }
+
+    #output p {
+      margin: 6px 0;
+    }
+  </style>
+</head>
+
+<body>
+<div class="box">
+
+  <h1>🥭 Mango Plant Disease Detection</h1>
+
+  <input type="file" id="file">
+  <br><br>
+
+  <button onclick="upload()">Upload</button>
+  <button onclick="capture()">Capture</button>
+  <button onclick="diagnose()">Diagnose</button>
+  <button onclick="clean()">Clean</button>
+
+  <hr>
+
+  <div class="row">
+    <div>
+      <img id="preview" style="display:none;">
+    </div>
+
+    <div id="output"></div>
+  </div>
+
+<script>
+function refreshPreview() {
+  const img = document.getElementById("preview");
+  img.style.display = "block";
+  img.src = "/preview?ts=" + Date.now(); // cache-buster
+}
+
+function upload() {
+  const fileInput = document.getElementById("file");
+
+  if (!fileInput.files.length) {
+    alert("Please select an image");
+    return;
+  }
+
+  const fd = new FormData();
+  fd.append("file", fileInput.files[0]);
+
+  fetch("/upload", { method: "POST", body: fd })
+    .then(() => refreshPreview());
+}
+
+function capture() {
+  fetch("/capture", { method: "POST" })
+    .then(() => refreshPreview());
+}
+
+function diagnose() {
+  fetch("/diagnose", { method: "POST" })
+    .then(r => r.json())
+    .then(d => {
+
+      const out = document.getElementById("output");
+      out.innerHTML = ""; // always clear first
+
+      // 🔴 Rejected / non-success case
+      if (d.status !== "success") {
+        out.innerHTML = `
+          <h3>${d.predicted_label || "Rejected"}</h3>
+          <p>${d.cause || ""}</p>
+          <p>${d.treatment || ""}</p>
+          <p>${d.prevention || ""}</p>
+        `;
+        return;
+      }
+
+      // 🟢 Success case
+      out.innerHTML = `
+        <h3>${d.predicted_label}</h3>
+        <p><b>Confidence:</b> ${(d.confidence * 100).toFixed(2)}%</p>
+        <p><b>Cause:</b> ${d.cause}</p>
+        <p><b>Treatment:</b> ${d.treatment}</p>
+        <p><b>Prevention:</b> ${d.prevention}</p>
+      `;
+    })
+    .catch(err => {
+      console.error(err);
+      document.getElementById("output").innerHTML =
+        "<p>Inference failed</p>";
+    });
+}
+
+function clean() {
+  fetch("/clean", { method: "POST" })
+    .then(() => {
+      document.getElementById("preview").src = "";
+      document.getElementById("preview").style.display = "none";
+      document.getElementById("output").innerHTML = "";
+    });
+}
+</script>
+
+</div>
+</body>
+</html>

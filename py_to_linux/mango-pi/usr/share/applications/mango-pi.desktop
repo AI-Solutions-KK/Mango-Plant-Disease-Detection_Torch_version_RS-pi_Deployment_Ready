@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Plant Disease Detector
+Comment=Flask-based plant disease detection application for Raspberry Pi
+Exec=/usr/bin/python3 /opt/mango-pi/server.py
+Icon=mango-pi
+Terminal=false
+Type=Application
+Categories=Education;AI;
+StartupNotify=true

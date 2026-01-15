@@ -1,0 +1,20 @@
+#!/bin/sh
+set -e
+
+APP_DIR="/opt/mango-pi"
+
+echo "🍃 Mango-Pi: Post-install started"
+
+# Ensure run script is executable
+if [ -f "$APP_DIR/run.sh" ]; then
+    chmod +x "$APP_DIR/run.sh"
+fi
+
+# Do NOT install pip packages here
+# Do NOT access camera here
+# Do NOT modify system Python
+
+echo "✅ Mango-Pi installed successfully"
+echo "👉 Run the application using: /opt/mango-pi/run.sh"
+
+exit 0

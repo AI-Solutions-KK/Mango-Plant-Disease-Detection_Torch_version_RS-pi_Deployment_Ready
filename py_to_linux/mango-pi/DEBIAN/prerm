@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e
+
+APP_DIR="/opt/mango-pi"
+
+echo "🧹 Mango-PI pre-remove started..."
+
+# Stop nothing (no system services used)
+# Just clean app-level files safely
+
+if [ -d "$APP_DIR" ]; then
+    echo "📁 Removing application directory..."
+    rm -rf "$APP_DIR"
+fi
+
+echo "✅ Mango-PI removed cleanly"
+exit 0

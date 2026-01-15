@@ -1,0 +1,30 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <list>
+          <option value="streamlit" />
+          <option value="opencv-python" />
+          <option value="numpy" />
+          <option value="pandas" />
+          <option value="scikit-learn" />
+          <option value="torch" />
+          <option value="torchvision" />
+          <option value="facenet-pytorch" />
+          <option value="Pillow" />
+          <option value="joblib" />
+          <option value="opencv-python-headless" />
+          <option value="python-dotenv" />
+          <option value="unstructured" />
+          <option value="tiktoken" />
+          <option value="langchain-chroma" />
+          <option value="langchain-groq" />
+          <option value="langchain-community" />
+          <option value="protobuf" />
+          <option value="langchain-huggingface" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

@@ -1,0 +1,9 @@
+actual,correct_count,total_count,accuracy
+Anthracnose,494,500,0.988
+Bacterial Canker,500,500,1.0
+Cutting Weevil,500,500,1.0
+Die Back,500,500,1.0
+Gall Midge,500,500,1.0
+Healthy,500,500,1.0
+Powdery Mildew,482,500,0.964
+Sooty Mould,496,500,0.992

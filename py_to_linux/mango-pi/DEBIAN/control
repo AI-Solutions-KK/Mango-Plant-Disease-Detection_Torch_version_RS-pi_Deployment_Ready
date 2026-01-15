@@ -1,0 +1,11 @@
+Package: mango-pi
+Version: 1.2.0
+Section: utils
+Priority: optional
+Architecture: all
+Depends: python3, python3-pip, python3-opencv, libatlas-base-dev, libjpeg-dev, libpng-dev
+Maintainer: SRPIT
+Description: Mango Plant Disease Detection (Auto Camera Detect)
+ AI-based application for detecting mango plant diseases using
+ image-based inference with automatic camera detection.
+ Works on Linux PC and Raspberry Pi without modifying the OS.
